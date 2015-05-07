@@ -1,0 +1,59 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:IO="clr-namespace:System.IO;assembly=System" x:Class="SocketSenderServerWPF.MainWindow"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="E_xit" Click="ExitMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Server">
+                    <MenuItem x:Name="StartMenuItem" Header="S_tart" Click="StartMenuItem_Click"/>
+                    <MenuItem x:Name="StopMenuItem" Header="Sto_p" Click="StopMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="100*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Server IP" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="ServerIpBox" Text="TextBox" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Left" IsEnabled="False" />
+                <Label Content="Port No." Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="PortNoBox" Text="TextBox" Grid.Row="0" Grid.Column="3" HorizontalContentAlignment="Left" TextChanged="PortNoBox_TextChanged" KeyUp="PortNoBox_KeyUp" />
+
+                <ListView x:Name="OutputLog" Grid.Row="1" Grid.ColumnSpan="4">
+                    <ListBoxItem Content="Wibble"/>
+                    <ListBoxItem Content="Wibble"/>
+                    <ListBoxItem Content="Wibble"/>
+                </ListView>
+            </Grid>
+        </DockPanel>
+
+        <StatusBar Grid.Row="2" HorizontalContentAlignment="Center">
+            <StatusBarItem Content="Wibble"/>
+        </StatusBar>
+
+    </Grid>
+</Window>
