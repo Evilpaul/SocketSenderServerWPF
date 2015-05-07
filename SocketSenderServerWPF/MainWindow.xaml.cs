@@ -44,17 +44,14 @@ namespace SocketSenderServerWPF
 				if (!status)
 				{
 					UpdateOpenBtnStatus();
+					ServerStatusText.Content = "Server is stopped";
 				}
 				else
 				{
 					StartMenuItem.IsEnabled = !status;
+					ServerStatusText.Content = "Server is running";
 				}
 				StopMenuItem.IsEnabled = status;
-
-				if (!status)
-				{
-					server.closeSocket();
-				}
 			});
 
 			ServerIpBox.Text = GetIP();
@@ -140,20 +137,18 @@ namespace SocketSenderServerWPF
 
 		private void StopMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			progress_str.Report("Closing Socket...");
-			progress_srv.Report(false);
+			server.closeSocket();
 		}
 
 		private void StartMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			StartMenuItem.IsEnabled = false;
-			progress_str.Report("Starting Server...");
 
 			// See if we have text on the IP and Port text fields
 			if (ServerIpBox.Text == "" || PortNoBox.Text == "")
 			{
 				progress_str.Report("IP Address and Port Number are required to start the Server");
-				progress_srv.Report(false);
+				server.closeSocket();
 				return;
 			}
 
@@ -165,12 +160,41 @@ namespace SocketSenderServerWPF
 			UpdateOpenBtnStatus();
 		}
 
-		private void PortNoBox_KeyUp(object sender, KeyEventArgs e)
+		private void PortNoBox_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			if (!Regex.IsMatch(e.Key.ToString(), "^[0-9\b]+$"))
+			switch(e.Key)
 			{
-				e.Handled = true;
+				case Key.D0:
+				case Key.D1:
+				case Key.D2:
+				case Key.D3:
+				case Key.D4:
+				case Key.D5:
+				case Key.D6:
+				case Key.D7:
+				case Key.D8:
+				case Key.D9:
+				case Key.Back:
+				case Key.Delete:
+				case Key.Left:
+				case Key.Up:
+				case Key.Down:
+				case Key.Right:
+					break;
+				default:
+					e.Handled = true;
+					break;
 			}
+		}
+
+		private void PortNoBox_PastingHandler(object sender, DataObjectPastingEventArgs e)
+		{
+			e.CancelCommand();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			server.closeSocket();
 		}
 	}
 }

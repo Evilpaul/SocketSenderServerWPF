@@ -7,31 +7,34 @@ namespace SocketSenderServerWPF
 	class Server
 	{
 		private IProgress<string> progress_str;
-		private IProgress<Boolean> progress_hmi;
+		private IProgress<Boolean> progress_srv;
 
 		private UdpClient receiver;
 
-		public Server(IProgress<string> prg_str, IProgress<Boolean> prg_hmi)
+		public Server(IProgress<string> prg_str, IProgress<Boolean> prg_srv)
 		{
 			progress_str = prg_str;
-			progress_hmi = prg_hmi;
+			progress_srv = prg_srv;
 		}
 
 		public void openSocket(int port)
 		{
+			progress_str.Report("Starting Server...");
 			receiver = new UdpClient(port);
 			receiver.BeginReceive(new AsyncCallback(DataReceived), receiver);
 
-			progress_hmi.Report(true);
+			progress_srv.Report(true);
 		}
 
 		public void closeSocket()
 		{
 			if (receiver != null)
 			{
+				progress_str.Report("Closing Socket...");
 				receiver.Close();
 				receiver = null;
 			}
+			progress_srv.Report(false);
 		}
 
 		private void DataReceived(IAsyncResult ar)
@@ -52,12 +55,12 @@ namespace SocketSenderServerWPF
 			catch (ObjectDisposedException)
 			{
 				progress_str.Report("DataReceived: Socket has been closed");
-				progress_hmi.Report(false);
+				progress_srv.Report(false);
 			}
 			catch (SocketException se)
 			{
 				progress_str.Report(se.Message);
-				progress_hmi.Report(false);
+				progress_srv.Report(false);
 			}
 		}
 	}
