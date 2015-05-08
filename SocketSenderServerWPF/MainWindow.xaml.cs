@@ -20,7 +20,7 @@ namespace SocketSenderServerWPF
 
 		private Server server;
 
-		private readonly Key[] allowedKeys = { Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.Back, Key.Delete, Key.Left, Key.Up, Key.Down, Key.Right };
+		private IReadOnlyList<Key> allowedKeys = new List<Key> { Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.Back, Key.Delete, Key.Left, Key.Up, Key.Down, Key.Right };
 
 		public MainWindow()
 		{
