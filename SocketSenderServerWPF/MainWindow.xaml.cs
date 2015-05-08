@@ -28,6 +28,8 @@ namespace SocketSenderServerWPF
 
 		private Server server;
 
+		private readonly Key[] allowedKeys = { Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.Back, Key.Delete, Key.Left, Key.Up, Key.Down, Key.Right };
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -163,28 +165,9 @@ namespace SocketSenderServerWPF
 
 		private void PortNoBox_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			switch(e.Key)
+			if (!allowedKeys.Contains(e.Key))
 			{
-				case Key.D0:
-				case Key.D1:
-				case Key.D2:
-				case Key.D3:
-				case Key.D4:
-				case Key.D5:
-				case Key.D6:
-				case Key.D7:
-				case Key.D8:
-				case Key.D9:
-				case Key.Back:
-				case Key.Delete:
-				case Key.Left:
-				case Key.Up:
-				case Key.Down:
-				case Key.Right:
-					break;
-				default:
-					e.Handled = true;
-					break;
+				e.Handled = true;
 			}
 		}
 
