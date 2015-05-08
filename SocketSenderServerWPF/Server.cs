@@ -47,7 +47,7 @@ namespace SocketSenderServerWPF
 
 				// Convert data to ASCII and print in console
 				string receivedText = BitConverter.ToString(receivedBytes).Replace("-", string.Empty);
-				progress_str.Report(receivedIpEndPoint + ": " + receivedText);
+				progress_str.Report(DateTime.Now.ToString("HH:mm:ss.fff") + " | " + receivedIpEndPoint + ": " + receivedText);
 
 				// Restart listening for udp data packages
 				u.BeginReceive(new AsyncCallback(DataReceived), u);
