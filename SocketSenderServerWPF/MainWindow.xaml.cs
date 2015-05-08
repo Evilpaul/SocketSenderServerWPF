@@ -35,7 +35,8 @@ namespace SocketSenderServerWPF
 			progress_str = new Progress<string>(status =>
 			{
 				OutputLog.Items.Add(status);
-				//OutputLog.TopIndex = OutputLog.Items.Count - 1;
+				OutputLog.UpdateLayout();
+				OutputLog.ScrollIntoView(OutputLog.Items[OutputLog.Items.Count - 1]);
 			});
 
 			progress_srv = new Progress<Boolean>(status =>
